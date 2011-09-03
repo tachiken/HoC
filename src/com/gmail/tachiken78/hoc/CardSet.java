@@ -1,7 +1,6 @@
 package com.gmail.tachiken78.hoc;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * カードの集まりを表すクラス。
