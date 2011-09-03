@@ -1,8 +1,18 @@
 package com.gmail.tachiken78.hoc;
 
+import java.util.EnumSet;
+
 public class HocMain {
 	private static int playerCount;
 	private static int turnPlayer;
+	private static int totalTurn;
+
+	private static final int MAX_PLAYER_COUNT = 4 ;
+	private static final int DEFAULT_HAND_COUNT = 5 ;
+	private static Talon yamafuda[];
+	private static Hand tefuda[];
+
+	private static final int TEST_PLAYER_INDEX = 0 ;
 
 	public static void main(String[] args) {
 		decidePlayerNumber();
@@ -23,8 +33,9 @@ public class HocMain {
 				break;
 			}
 			turnPlayer++;
-			if(turnPlayer > playerCount){
-				turnPlayer = 1;
+			if(turnPlayer >= playerCount){
+				turnPlayer = 0;
+				totalTurn++;
 			}
 		}
 
@@ -38,6 +49,23 @@ public class HocMain {
 	 * @return 正常終了時は0を返す。それ以外はエラー。
 	 */
 	private static int initializeSystem() {
+		totalTurn = 1;
+
+		yamafuda = new Talon[MAX_PLAYER_COUNT];
+		tefuda = new Hand[MAX_PLAYER_COUNT];
+		for(int cnt=0; cnt<MAX_PLAYER_COUNT; cnt++){
+			yamafuda[cnt] = new Talon();
+			tefuda[cnt] = new Hand();
+		}
+
+		for(int cnt=1; cnt<8; cnt++){
+			Card card = new Card("農村" + cnt, 1, EnumSet.of(CardType.領地), 1);
+			yamafuda[TEST_PLAYER_INDEX].add(card);
+		}
+		for(int cnt=1; cnt<4; cnt++){
+			Card card = new Card("見習い侍女" + cnt, 1, EnumSet.of(CardType.継承権), 2);
+			yamafuda[TEST_PLAYER_INDEX].add(card);
+		}
 		return 0;
 	}
 
@@ -77,8 +105,8 @@ public class HocMain {
 	 * @return 正常終了時は0を返す。それ以外はエラー。
 	 */
 	private static int decidePlayerNumber() {
-		/* COMMENT: 今は２人固定としておく */
-		playerCount = 2;
+		/* COMMENT: 今は１人固定としておく */
+		playerCount = 1;
 		return 0;
 	}
 
@@ -87,8 +115,8 @@ public class HocMain {
 	 * @return 正常終了時は0を返す。それ以外はエラー。
 	 */
 	private static int decideFirstPlayer() {
-		/* COMMENT: ひとまず何も考えずに１番のプレーヤーをファーストプレーヤーとする */
-		turnPlayer = 1;
+		/* COMMENT: ひとまず何も考えずに０番のプレーヤーをファーストプレーヤーとする */
+		turnPlayer = TEST_PLAYER_INDEX;
 		return 0;
 	}
 
@@ -98,6 +126,12 @@ public class HocMain {
 	 */
 	private static int prepearHandOfEachPlayer()
 	{
+		for(int cnt=0; cnt<playerCount; cnt++){
+			yamafuda[cnt].doSuffle();
+			for(int i=0; i<DEFAULT_HAND_COUNT; i++){
+				tefuda[cnt].add(yamafuda[cnt].drawFromTop());
+			}
+		}
 		return 0;
 	}
 
@@ -106,6 +140,37 @@ public class HocMain {
 	 * @return 正常終了時は0を返す。それ以外はエラー。
 	 */
 	private static int doTurn() {
+		System.out.println("Turn:" + totalTurn + " 開始。");
+		System.out.println("プレーヤー" + turnPlayer + "の手札:");
+		tefuda[0].printAllCardInfo();
+		/* メインフェイズ */
+		System.out.println("メインフェイズ開始");
+		while(true){
+			break;
+		}
+
+		/* セカンドフェイズ */
+		System.out.println("セカンドフェイズ開始");
+		System.out.println("プレーヤー" + turnPlayer + "の手札:");
+		tefuda[0].printAllCardInfo();
+		/* TODO: ユーザにセカンドフェイズの行動選択をさせる */
+		/* 1: カードの購入 */
+		/* 2: 継承権カードのセット */
+		/* 3: プリンセスの擁立 */
+
+		/* クリンナップフェイズ */
+		System.out.println("クリンナップフェイズ開始");
+		/* TODO: 手札を全て捨て札にする */
+		/* TODO: 台札を全て捨て札にする */
+
+		/* 手札補充フェイズ */
+		System.out.println("手札補充フェイズ開始");
+		/* TODO: 山札から手札を補充する */
+
+		/* マーケット補充フェイズ */
+		System.out.println("マーケット補充フェイズ開始");
+		refillMarket();
+
 		return 0;
 	}
 
@@ -115,7 +180,7 @@ public class HocMain {
 	 */
 	private static boolean isGameEnd() {
 		/* TODO: ゲーム終了判定を実装 */
-		return false;
+		return true;
 	}
 
 	/**
