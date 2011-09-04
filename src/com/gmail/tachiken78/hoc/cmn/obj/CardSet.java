@@ -1,4 +1,4 @@
-package com.gmail.tachiken78.hoc;
+package com.gmail.tachiken78.hoc.cmn.obj;
 
 import java.util.ArrayList;
 

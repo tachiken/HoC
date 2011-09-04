@@ -1,4 +1,4 @@
-package com.gmail.tachiken78.hoc;
+package com.gmail.tachiken78.hoc.cmn.obj;
 
 /**
  * 手札を表すクラス。

@@ -2,6 +2,11 @@ package com.gmail.tachiken78.hoc;
 
 import java.util.EnumSet;
 
+import com.gmail.tachiken78.hoc.cmn.obj.Card;
+import com.gmail.tachiken78.hoc.cmn.obj.CardType;
+import com.gmail.tachiken78.hoc.cmn.obj.Hand;
+import com.gmail.tachiken78.hoc.cmn.obj.Talon;
+
 public class HocMain {
 	private static int playerCount;
 	private static int turnPlayer;
